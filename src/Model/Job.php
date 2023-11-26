@@ -257,6 +257,8 @@ class Job implements JobInterface
     }
 
     /**
+     * Send a file directly to the printer.
+     *
      * @param string      $filename
      * @param string      $name
      * @param null|string $mime_type
@@ -284,6 +286,8 @@ class Job implements JobInterface
     }
 
     /**
+     * Send text directly to the printer.
+     *
      * @param string $text
      * @param string $name
      * @param string $mime_type
@@ -296,6 +300,26 @@ class Job implements JobInterface
             'type' => self::CONTENT_TEXT,
             'name' => $name,
             'mimeType' => $mime_type,
+            'text' => $text,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * Send raw file contents to printer.
+     *
+     * @param string $text
+     * @param string $name
+     *
+     * @return Job
+     */
+    public function addRaw(string $text, string $name = ''): JobInterface
+    {
+        $this->content[] = [
+            'type' => self::CONTENT_TEXT,
+            'name' => $name,
+            'mimeType' => 'application/vnd.cups-raw',
             'text' => $text,
         ];
 
